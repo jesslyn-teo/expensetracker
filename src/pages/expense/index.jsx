@@ -3,6 +3,11 @@ import useAddTransaction from "../../hooks/useAddTransactions";
 function ExpenseTracker() {
   const { addTransaction } = useAddTransaction();
 
+  const submitTransactionForm = (e) => {
+    e.preventDefault();
+    addTransaction({description:"Haircut", transactionAmount:22, transactionType: "expense"});
+  }
+
   return (
     <>
       <div className="expense tracker">
@@ -25,7 +30,7 @@ function ExpenseTracker() {
             </div>
           </div>
 
-          <form className="add transaction">
+          <form className="add transaction" onSubmit={submitTransactionForm}>
             <input type="text" placeholder="Description" required />
             <input type="number" placeholder="Amount" required />
             <input type="radio" id="expense" value="expense" />
