@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useAddTransaction from "../../hooks/useAddTransactions";
 
 function ExpenseTracker() {
