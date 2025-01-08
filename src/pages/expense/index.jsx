@@ -1,12 +1,21 @@
+import { useState, useEffect } from "react";
 import useAddTransaction from "../../hooks/useAddTransactions";
 
 function ExpenseTracker() {
   const { addTransaction } = useAddTransaction();
 
+  const [description, setDescription] = useState("");
+  const [transactionAmount, setTransactionAmount] = useState(0);
+  const [transactionType, setTransactionType] = useState("expense");
+
   const submitTransactionForm = (e) => {
     e.preventDefault();
-    addTransaction({description:"Haircut", transactionAmount:22, transactionType: "expense"});
-  }
+    addTransaction({
+      description: "Haircut",
+      transactionAmount: 22,
+      transactionType: "expense",
+    });
+  };
 
   return (
     <>
@@ -31,11 +40,33 @@ function ExpenseTracker() {
           </div>
 
           <form className="add transaction" onSubmit={submitTransactionForm}>
-            <input type="text" placeholder="Description" required />
-            <input type="number" placeholder="Amount" required />
-            <input type="radio" id="expense" value="expense" />
+            <input
+              type="text"
+              placeholder="Description"
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Amount"
+              onChange={(e) => setTransactionAmount(e.target.value)}
+              required
+            />
+            <input
+              type="radio"
+              id="expense"
+              value="expense"
+              checked={transactionType === "expense"}
+              onChange={(e) => setTransactionType(e.target.value)}
+            />
             <label>Expenses</label>
-            <input type="radio" id="income" value="income" />
+            <input
+              type="radio"
+              id="income"
+              value="income"
+              checked={transactionType === "income"}
+              onChange={(e) => setTransactionType(e.target.value)}
+            />
             <label>Income</label>
             <button type="submit">Add Transaction</button>
           </form>
