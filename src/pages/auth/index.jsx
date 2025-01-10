@@ -1,9 +1,11 @@
 import { auth, provider } from "../../configs/firebase-config";
 import { signInWithPopup } from 'firebase/auth';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import  useGetUserInfo from "../../hooks/useGetUserInfo"
 
 function Auth(){
     const navigate = useNavigate();
+    const { isAuth } = useGetUserInfo();
 
     const signInWithGoogle = async () => {
         const results = await signInWithPopup(auth, provider);
@@ -15,6 +17,10 @@ function Auth(){
         }
         localStorage.setItem("auth", JSON.stringify(authInfo));
         navigate("/et");
+    };
+
+    if(isAuth) {
+        return <Navigate to="/et" />
     }
 
     return (
