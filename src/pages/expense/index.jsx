@@ -44,24 +44,33 @@ function ExpenseTracker() {
     <>
       <div className="expense tracker">
         <div className="container">
-          <h1>{name}'s Expense Tracker</h1>
+          <div className="header">
+            {profilePhoto && (
+              <div className="profile">
+                <img className="profile-photo" src={profilePhoto} />
+              </div>
+            )}
+            <h1>{name}'s Expense Tracker</h1>
+            <button className="sign-out" onClick={userSignOut}>Sign Out</button>
+          </div>
+  
           <div className="balance">
             <h3>Your Balance</h3>
             <h2>${balance}</h2>
           </div>
-
+  
           <div className="summary">
             <div className="income">
               <h4>Income</h4>
               <p>${income}</p>
             </div>
-
+  
             <div className="expense">
               <h4>Expense</h4>
               <p>${expenses}</p>
             </div>
           </div>
-
+  
           <form className="add transaction" onSubmit={submitTransactionForm}>
             <input
               type="text"
@@ -77,39 +86,37 @@ function ExpenseTracker() {
               onChange={(e) => setTransactionAmount(e.target.value)}
               required
             />
-            <input
-              type="radio"
-              id="expense"
-              value="expense"
-              checked={transactionType === "expense"}
-              onChange={(e) => setTransactionType(e.target.value)}
-            />
-            <label>Expenses</label>
-            <input
-              type="radio"
-              id="income"
-              value="income"
-              checked={transactionType === "income"}
-              onChange={(e) => setTransactionType(e.target.value)}
-            />
-            <label>Income</label>
+            <div className="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  id="expense"
+                  value="expense"
+                  checked={transactionType === "expense"}
+                  onChange={(e) => setTransactionType(e.target.value)}
+                />
+                Expenses
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  id="income"
+                  value="income"
+                  checked={transactionType === "income"}
+                  onChange={(e) => setTransactionType(e.target.value)}
+                />
+                Income
+              </label>
+            </div>
             <button type="submit">Add Transaction</button>
           </form>
         </div>
-        {profilePhoto && (
-          <div className="profile">
-            {""}
-            <img className="profile-photo" src={profilePhoto} />
-          </div>
-        )}
-        <button onClick={userSignOut}>Sign Out</button>
       </div>
       <div className="transactions">
         <h3>Transactions</h3>
         <ul>
           {transactions.map((transaction) => {
-            const { description, transactionAmount, transactionType } =
-              transaction;
+            const { description, transactionAmount, transactionType } = transaction;
             return (
               <li>
                 <h4>{description}</h4>
